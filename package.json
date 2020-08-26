@@ -1,5 +1,6 @@
 {
   "name": "movies-app",
+  "homepage": "https://blackwhite2018.github.io/movies-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
