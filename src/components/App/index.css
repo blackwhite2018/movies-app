@@ -1,0 +1,56 @@
+html,
+body {
+  background: #E5E5E5;
+  font-family: Inter;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-basis: 1010px;
+  min-width: 200px;
+  padding: 0 33px 18px 33px;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before,
+.ant-tabs-bottom > .ant-tabs-nav::before,
+.ant-tabs-top > div > .ant-tabs-nav::before,
+.ant-tabs-bottom > div > .ant-tabs-nav::before {
+  border: 0;
+}
+
+.ant-tabs-nav-list {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-tabs-tab:nth-child(2) {
+  margin: 0;
+}
+
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.ant-pagination-item-active {
+  background: #1890ff;
+}
+
+.ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+.navbar-wrapper {
+  padding: 0 3px;
+}

@@ -18,22 +18,13 @@
     "@typescript-eslint"
   ],
   "parser": "@typescript-eslint/parser",
-  "settings": {
-    "import/extensions": [
-      ".js",
-      ".ts",
-      ".jsx",
-      ".tsx"
-    ],
-    "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
-    }
-  },
   "rules": {
     "react/jsx-filename-extension": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "camelcase": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
