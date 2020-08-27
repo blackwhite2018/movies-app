@@ -28,7 +28,7 @@ const App: React.FC = () => {
     );
     if (data) {
       setFilms(
-        data.reduce(
+        data.slice(0, 20).reduce(
           (acc: Array<FilmItem>, item: FilmItem): Array<FilmItem> => [
             ...acc,
             {
@@ -48,6 +48,8 @@ const App: React.FC = () => {
   }, []);
 
   const searchData = (value: string): void => {
+    console.log(value);
+
     loadData(value);
   };
 

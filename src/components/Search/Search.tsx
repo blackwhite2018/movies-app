@@ -14,7 +14,7 @@ export default ({ searchData }: SearchDataType): JSX.Element => {
   };
 
   const handleSearchData = (evt: React.KeyboardEvent<HTMLInputElement>): void => {
-    const target: any = evt;
+    const target = evt.target as HTMLInputElement;
     if (evt.keyCode === 13) {
       debounceFn(target.value);
       setValue('');
