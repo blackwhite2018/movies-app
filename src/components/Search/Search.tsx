@@ -11,14 +11,7 @@ export default ({ searchData }: SearchDataType): JSX.Element => {
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     const target = evt.target as HTMLInputElement;
     setValue(target.value);
-  };
-
-  const handleSearchData = (evt: React.KeyboardEvent<HTMLInputElement>): void => {
-    const target = evt.target as HTMLInputElement;
-    if (evt.keyCode === 13) {
-      debounceFn(target.value);
-      setValue('');
-    }
+    debounceFn(target.value);
   };
 
   return (
@@ -28,7 +21,6 @@ export default ({ searchData }: SearchDataType): JSX.Element => {
       placeholder="Type to search..."
       value={value}
       onChange={handleChange}
-      onKeyUp={handleSearchData}
     />
   );
 };

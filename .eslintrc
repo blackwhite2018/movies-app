@@ -27,6 +27,7 @@
     "no-console": "off",
     "import/no-extraneous-dependencies": "off",
     "object-curly-newline": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
