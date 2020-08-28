@@ -6,7 +6,6 @@ export default async (url: string): Promise<Array<FilmItem> | null> => {
     const json = await response.json();
     return json.results;
   } catch (e) {
-    console.error(e.message);
     return null;
   }
 };

@@ -1,4 +1,7 @@
 export default (strOrigin: string, nbr: number): string => {
+  if (strOrigin.length === 0) {
+    return '';
+  }
   let length: number = 0;
   const arr: Array<string> = strOrigin.split(' ');
   const res: Array<string> = arr.reduce((acc: Array<string>, str: string): Array<string> => {
