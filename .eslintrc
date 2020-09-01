@@ -28,6 +28,16 @@
     "import/no-extraneous-dependencies": "off",
     "object-curly-newline": "off",
     "comma-dangle": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "react/no-array-index-key": "off",
+    "default-case": "off"
   }
 }

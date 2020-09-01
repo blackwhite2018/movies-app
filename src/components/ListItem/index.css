@@ -52,6 +52,22 @@
   align-items: center;
 }
 
+.rating-color-1 {
+  border-color: #E90000;
+}
+
+.rating-color-2 {
+  border-color: #E97E00;
+}
+
+.rating-color-3 {
+  border-color: #E9D100;
+}
+
+.rating-color-4 {
+  border-color: #66E900;
+}
+
 .list-item__header {
   font-family: Inter;
   font-size: 20px;

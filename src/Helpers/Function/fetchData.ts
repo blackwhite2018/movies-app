@@ -1,10 +1,8 @@
-import FilmItem from '../../components/interface/FilmItem';
-
-export default async (url: string): Promise<Array<FilmItem> | null> => {
+export default async <T>(url: string): Promise<T | null> => {
   try {
     const response = await fetch(url);
     const json = await response.json();
-    return json.results;
+    return json;
   } catch (e) {
     return null;
   }
