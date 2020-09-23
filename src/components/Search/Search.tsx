@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { debounce } from '../../Helpers';
-import SearchDataType from '../interface/SearchDataType';
+import { SearchDataType } from '../interface';
 import './index.css';
+
+let debounceFn: Function;
 
 export default ({ searchData }: SearchDataType): JSX.Element => {
   const [value, setValue] = useState<string>('');
-  const debounceFn: Function = debounce(searchData, 700);
+
+  useEffect(() => {
+    debounceFn = debounce(searchData, 700);
+  }, []);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     const target = evt.target as HTMLInputElement;

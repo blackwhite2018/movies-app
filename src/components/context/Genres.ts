@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import IGenre from '../interface/Genre';
+import { IGenre } from '../interface';
 
 const Genres = createContext<Array<IGenre>>([]);
 

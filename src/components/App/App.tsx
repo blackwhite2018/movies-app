@@ -1,21 +1,17 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import shortid from 'shortid';
 import { Tabs, Pagination, Spin } from 'antd';
-import 'antd/dist/antd.css';
 import { format, isValid } from 'date-fns';
 
-import FilmItem from '../interface/FilmItem';
-import SearchInput from '../Search';
-import Error from '../Error';
-import NotItems from '../NotItems';
-
+// components, configure files
+import { Search as SearchInput, Error, NotItems } from '..';
+import { FilmItem, ResponseGenres, ResponseFilm, ResponseGuestSession, IGenre } from '../interface';
 import { fetchData } from '../../Helpers';
 import Genres from '../context/Genres';
-import ResponseGenres from '../interface/ResponseGenres';
-import ResponseFilm from '../interface/ResponseFilm';
-import ResponseGuestSession from '../interface/ResponseGuestSession';
-import IGenre from '../interface/Genre';
 import { URL_MOVIES, API_KEY } from '../../config';
+
+// styles
+import 'antd/dist/antd.css';
 import './index.css';
 
 const { TabPane } = Tabs;
@@ -29,7 +25,7 @@ const App: React.FC = () => {
   const [films, setFilms] = useState<Array<FilmItem>>([]);
   const [page, setPage] = useState<number>(1);
   const [sizePage, setSizePage] = useState<number>(10);
-  const [currentValueSearch, setCurrentValueSearch] = useState<string>('return');
+  const [currentValueSearch, setCurrentValueSearch] = useState<string>('');
   const [genres, setGenres] = useState<Array<IGenre>>([]);
   const [sessionID, setSessionID] = useState<string>('');
 
@@ -57,9 +53,7 @@ const App: React.FC = () => {
 
   const updateFilms = (response: Array<FilmItem>) => {
     setFilms(
-      response.splice((page - 1) * sizePage, sizePage).reduce((acc: Array<FilmItem>, item: FilmItem): Array<
-        FilmItem
-      > => {
+      response.splice((page - 1) * 10, 10).reduce((acc: Array<FilmItem>, item: FilmItem): Array<FilmItem> => {
         const newItem = { id: shortid.generate(), ...item };
         if (!isValid(new Date(item.release_date))) newItem.release_date = '';
         else newItem.release_date = format(new Date(item.release_date), 'MMMM dd, yyyy');
@@ -73,19 +67,23 @@ const App: React.FC = () => {
       `${URL_MOVIES}search/movie?api_key=${API_KEY}&query=${value}&page=${page}`
     );
 
-    const genresIds: ResponseGenres | null = await fetchData(`${URL_MOVIES}genre/movie/list?api_key=${API_KEY}`);
-
     if (data?.success === false) {
       setError(true);
       return;
     }
 
-    if (genresIds) setGenres(genresIds.genres);
-
     if (data) {
       const { results } = data;
-      updateFilms(results);
+      if (results) {
+        setSizePage(results.length);
+        updateFilms(results);
+      }
     } else setError(true);
+  };
+
+  const loadGenres = async () => {
+    const genresIds: ResponseGenres | null = await fetchData(`${URL_MOVIES}genre/movie/list?api_key=${API_KEY}`);
+    if (genresIds) setGenres(genresIds.genres);
   };
 
   const handleTabs = async (key: string) => {
@@ -108,27 +106,11 @@ const App: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    loadData(currentValueSearch);
-    createGuestSession();
-  }, []);
-
-  useEffect(() => {
-    List = lazy(() => import('../List'));
-  }, [films]);
-
-  useEffect(() => {
-    loadData(currentValueSearch);
-  }, [page]);
-
   const searchData = (value: string): void => {
-    loadData(value);
+    if (value === '') setFilms([]);
+    else loadData(value);
     setCurrentValueSearch(value);
   };
-
-  if (error) {
-    return <Error />;
-  }
 
   const handleChangePagination = (newPage: number, pageSize: any) => {
     if (page !== newPage) setPage(newPage);
@@ -143,6 +125,23 @@ const App: React.FC = () => {
       body: JSON.stringify({ value }),
     });
   };
+
+  useEffect(() => {
+    createGuestSession();
+    loadGenres();
+  }, []);
+
+  useEffect(() => {
+    List = lazy(() => import('../List'));
+  }, [films]);
+
+  useEffect(() => {
+    loadData(currentValueSearch);
+  }, [page]);
+
+  if (error) {
+    return <Error />;
+  }
 
   return (
     <div className="page">
@@ -162,7 +161,7 @@ const App: React.FC = () => {
         ) : (
           <Suspense fallback={<Spin />}>
             <Genres.Provider value={genres}>
-              <List items={films} handleChangeRate={handleChangeRate} />
+              <List items={films} activeTab={activeTab} handleChangeRate={handleChangeRate} />
             </Genres.Provider>
           </Suspense>
         )}
@@ -171,7 +170,7 @@ const App: React.FC = () => {
           defaultPageSize={sizePage}
           onChange={handleChangePagination}
           size="small"
-          total={50}
+          total={sizePage}
         />
       </div>
     </div>

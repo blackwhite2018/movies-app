@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Tag, Rate } from 'antd';
 
+import { IGenre } from '../interface';
+
 import Genres from '../context/Genres';
-import IGenre from '../interface/Genre';
 import { strSliceMaxLen } from '../../Helpers';
 import './index.css';
 
@@ -16,8 +17,9 @@ const ratingColor = (rating: number): string => {
 
 export default ({
   id,
-  data: { original_title, release_date, vote_average, overview, genre_ids },
+  data: { original_title, release_date, vote_average, overview, genre_ids, poster_path },
   handleChangeRate,
+  activeTab,
 }: any) => {
   const genres: Array<IGenre> = useContext<Array<IGenre>>(Genres);
 
@@ -27,9 +29,13 @@ export default ({
     handleChangeRate(id, value);
   };
 
+  const posterPath = poster_path
+    ? `http://image.tmdb.org/t/p/w440_and_h660_face/${poster_path}`
+    : `${process.env.PUBLIC_URL}/img/img.jpg`;
+
   return (
     <div className="list-item">
-      <img src={`${process.env.PUBLIC_URL}/img/img.jpg`} alt="The way back" className="poster list-item__poster" />
+      <img src={posterPath} alt="The way back" className="poster list-item__poster" />
       <div className="list-item__container">
         <div className="list-item__meta">
           <h5 className="list-item__header">{original_title}</h5>
@@ -40,7 +46,7 @@ export default ({
           <div className={classNameAverage}>{vote_average}</div>
         </div>
         <p className="list-item__description">{strSliceMaxLen(overview, 120)}</p>
-        <Rate onChange={handleChange} count={10} allowHalf defaultValue={vote_average} />
+        <Rate onChange={handleChange} count={10} allowHalf defaultValue={activeTab === '1' ? 0 : vote_average} />
       </div>
     </div>
   );

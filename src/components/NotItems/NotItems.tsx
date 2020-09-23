@@ -1,4 +1,4 @@
 import React from 'react';
-import NotItems from '../interface/NotItems';
+import { NotItems } from '../interface';
 
 export default ({ message }: NotItems) => <div>{message}</div>;

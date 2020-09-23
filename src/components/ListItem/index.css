@@ -6,7 +6,7 @@
 }
 
 .list-item__container {
-  padding: 12px 9px;
+  padding: 0px 9px 12px 9px;
   width: 100%;
 }
 
@@ -25,6 +25,9 @@
 
 .list-genre {
   display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  line-height: 15px;
 }
 
 .list-item__description {
@@ -37,6 +40,10 @@
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+.ant-tag {
+  margin-bottom: 8px;
 }
 
 .rating {
@@ -81,13 +88,12 @@
   color: #827E7E;
 }
 
-.list-genre {
-  font-size: 12px;
-  line-height: 15px;
-}
-
 .list-item__list-genre {
   margin-top: 10px;
+}
+
+.ant-rate-star  {
+  font-size: .7rem;
 }
 
 @media screen and (min-width: 992px) {
